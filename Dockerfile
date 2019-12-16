@@ -26,8 +26,9 @@ RUN rm -fR /var/www/html \
  && ln -s /question2answer /var/www/html \
  && ln -s /Donut/qa-plugin/Donut-admin /question2answer/qa-plugin \
  && ln -s /Donut/qa-theme/Donut-theme /question2answer/qa-theme
-    
-RUN sed -i "s/^<?php/<\?php\\nrequire_once QA_INCLUDE_DIR \. '\.\.\/qa-plugin\/qa-ldap-login\/qa-ldap-process\.php';/" /var/www/html/qa-include/pages/login.php
+
+# Put require into the login page
+RUN sed -i "s/^\(.*\)require_once QA_INCLUDE_DIR \. 'db\/selects\.php';/\1require_once QA_INCLUDE_DIR \. 'db\/selects\.php';\\n\1require_once QA_INCLUDE_DIR \. '\.\.\/qa-plugin\/qa-ldap-login\/qa-ldap-process\.php';/" /var/www/html/qa-include/pages/login.php
 
 EXPOSE 80
 
