@@ -5,7 +5,9 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/ap
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C
 
 RUN apt-get update \
-    && apt-get install -y php7.3-cli php7.3-mysql vim apache2 
+    && apt-get install -y php7.3-cli php7.3-mysql php7.3-ldap vim apache2 
+
+RUN echo "TLS_REQCERT  allow" >> /etc/ldap/ldap.conf 
 
 RUN git clone --branch "master" https://github.com/q2a/question2answer.git \
  && git clone https://github.com/amiyasahu/Donut.git \
@@ -25,6 +27,8 @@ RUN rm -fR /var/www/html \
  && ln -s /Donut/qa-plugin/Donut-admin /question2answer/qa-plugin \
  && ln -s /Donut/qa-theme/Donut-theme /question2answer/qa-theme
     
+RUN sed -i "s/^<?php/<\?php\\nrequire_once QA_INCLUDE_DIR \. '\.\.\/qa-plugin\/qa-ldap-login\/qa-ldap-process\.php';/" /var/www/html/qa-include/pages/login.php
+
 EXPOSE 80
 
 STOPSIGNAL SIGWINCH
