@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 ENV UBUNTU_CODENAME="focal"
-ENV PHP_VERSION="7.4"
+ENV PHP_VERSION="8.0"
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV APACHE_RUN_DIR="/etc/apache2"
 ENV APACHE_PID_FILE="/var/run/apache2/apache2"
@@ -44,7 +44,6 @@ RUN apt-get install --assume-yes --no-install-recommends --no-install-suggests \
     php${PHP_VERSION}-dev \
     php${PHP_VERSION}-gd \
     php${PHP_VERSION}-intl \
-    php${PHP_VERSION}-json \
     php${PHP_VERSION}-ldap \
     php${PHP_VERSION}-mbstring \
     php${PHP_VERSION}-msgpack \
